@@ -12,7 +12,20 @@ function App() {
 
         </div>
         <div className="player-commands">
+          <div className="player-start">
+              <div className='prop-ellr-box'>
 
+              </div>
+              <div className='reset'>
+                <button onClick={() => window.location.reload()}>Reset</button>
+              </div>
+          </div>
+          <div className="player-controls">
+
+          </div>
+          <div className="player-status">
+
+          </div>
         </div>
       </div>
     </div>
