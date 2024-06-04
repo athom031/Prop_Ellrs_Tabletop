@@ -1,0 +1,38 @@
+.App {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.app-title {
+    text-align: center;
+}
+
+.app-content {
+    display: flex;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    justify-content:  space-between;
+    align-items: center;
+    flex-grow: 1;
+}
+
+
+.board {
+    width: 45vw;
+    padding-right: 5vw;
+}
+
+.board .board-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.player-commands {
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+}
