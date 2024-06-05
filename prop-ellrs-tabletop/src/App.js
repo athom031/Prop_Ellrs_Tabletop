@@ -2,7 +2,7 @@
 import './App.css';
 import {useState, useEffect} from 'react';
 import {BOARD_LENGTH, DIRECTIONS, NORTH } from './constants/directions';
-import { ChatBox } from './constants/chatBox';
+import { ChatBox, StartingText, ErrorText, PlaceText, ReportText } from './constants/chatBox';
 import ReusableButton from './constants/reusableButton';
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
   const [spacebarButtonHover, setSpacebarButtonHover] = useState(false);
   const [leftButtonHover, setLeftButtonHover] = useState(false);
   const [rightButtonHover, setRightButtonHover] = useState(false);
-  const [chatBoxText, setChatBoxText] = useState('Hello World');
+  const [chatBoxText, setChatBoxText] = useState(StartingText);
 
   const handleBoardClick = event => {
     const boardRect = event.target.getBoundingClientRect();
@@ -30,13 +30,11 @@ function App() {
     } else {
       setCharacterLoc({x, y});
       setCharacterDir(DIRECTIONS[NORTH].name);
-      console.log(`prop ellr placed at ${x},${y} (relative to grid)`);
+      setChatBoxText(PlaceText({x, y}));
     }
   }
 
-  const report = () => {
-    console.log('lol');
-  }
+  const report = () => setChatBoxText(ReportText(characterLoc));
 
   const move = () => {
     if(isDisabled()) return;
@@ -48,6 +46,8 @@ function App() {
       // show error for attempting to move off table
       console.log('invalid move');
       let error_frame = 1;
+      const prevChatBoxText = chatBoxText;
+      setChatBoxText(ErrorText);
       const showErrorFrame = () => {
         if (error_frame <= 7) {
           setPlayerImg(`assets/prop_ellr/error/error_${error_frame}.png`);
@@ -55,12 +55,12 @@ function App() {
           setTimeout(showErrorFrame, 1000 / 7);
         } else {
           setPlayerImg(`assets/prop_ellr/directions/face_${characterDir}.png`);
+          setChatBoxText(prevChatBoxText);
         }
       };
       showErrorFrame();
     } else {
       setCharacterLoc({x: potX, y: potY});
-      console.log(`prop ellr moved to ${potX},${potY} (relative to grid)`);
     }
   }
 
