@@ -2,20 +2,19 @@
 import './App.css';
 import {useState, useEffect} from 'react';
 import {BOARD_LENGTH, DIRECTIONS, NORTH } from './constants/directions';
-import { isDocument } from '@testing-library/user-event/dist/utils';
-
+import { ChatBox } from './constants/chatBox';
 
 function App() {
   const [characterLoc, setCharacterLoc] = useState({x: null, y: null});
   const [characterDir, setCharacterDir] = useState(DIRECTIONS[NORTH].name);
   const [playerImg, setPlayerImg] = useState(`assets/prop_ellr/directions/face_${NORTH}.png`);
-
   const [idle_frame, setIdleFrame] = useState(1);
-
   const [restartButtonHover, setRestartButtonHover] = useState(false);
+  const [reportButtonHover, setReportButtonHover] = useState(false);
   const [spacebarButtonHover, setSpacebarButtonHover] = useState(false);
   const [leftButtonHover, setLeftButtonHover] = useState(false);
   const [rightButtonHover, setRightButtonHover] = useState(false);
+  const [chatBoxText, setChatBoxText] = useState('Hello World');
 
   const handleBoardClick = event => {
     const boardRect = event.target.getBoundingClientRect();
@@ -32,6 +31,10 @@ function App() {
       setCharacterDir(DIRECTIONS[NORTH].name);
       console.log(`prop ellr placed at ${x},${y} (relative to grid)`);
     }
+  }
+
+  const report = () => {
+    console.log('lol');
   }
 
   const move = () => {
@@ -193,7 +196,22 @@ function App() {
 
           {/* second row of commands: chat box showing status and report button */}
           <div className="player-status">
-
+            <ChatBox text={chatBoxText}/>
+            <div className='report-button'>
+              <div className='reusable-button'
+                  onMouseEnter={() => setReportButtonHover(!isDisabled() && true)}
+                  onMouseLeave={() => setReportButtonHover(false)}
+                  disabled={isDisabled()}
+                  onClick={() => report()}
+              >
+                <img
+                  className='button-img'
+                  src={`assets/buttons/report/report${reportButtonHover ? '-hover' : ''}.png`}
+                  alt='Spacebar Button'
+                />
+                <h2>Report Status</h2>
+              </div>
+            </div>
           </div>
 
           {/* third row of commands: player controls (space, left, right) */}
