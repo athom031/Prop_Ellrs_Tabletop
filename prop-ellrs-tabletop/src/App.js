@@ -2,6 +2,7 @@
 import './App.css';
 import {useState, useEffect} from 'react';
 import {BOARD_LENGTH, DIRECTIONS, NORTH } from './constants/directions';
+import { isDocument } from '@testing-library/user-event/dist/utils';
 
 
 function App() {
@@ -15,57 +16,6 @@ function App() {
   const [spacebarButtonHover, setSpacebarButtonHover] = useState(false);
   const [leftButtonHover, setLeftButtonHover] = useState(false);
   const [rightButtonHover, setRightButtonHover] = useState(false);
-
-  // useEffect(() => {
-  //   // Function to handle key events
-  //   const handleKeyEvent = (event) => {
-  //     switch (event.code) {
-  //       case 'Space':
-  //         if (event.type === 'keydown') {
-  //           console.log('Spacebar pressed down');
-  //           // Logic for spacebar keydown
-  //         } else {
-  //           console.log('Spacebar released');
-  //           // Logic for spacebar keyup
-  //         }
-  //         break;
-  //       case 'ArrowLeft':
-  //         if (event.type === 'keydown') {
-  //           console.log('Left arrow pressed');
-  //           // Logic for left arrow keydown
-  //         }
-  //         break;
-  //       case 'ArrowRight':
-  //         if (event.type === 'keydown') {
-  //           console.log('Right arrow pressed');
-  //           // Logic for right arrow keydown
-  //         }
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //   };
-  //   // Add event listeners for both keydown and keyup events
-  //   window.addEventListener('keydown', handleKeyEvent);
-  //   window.addEventListener('keyup', handleKeyEvent);
-  //   // Cleanup function to remove the event listeners
-  //   return () => {
-  //     window.removeEventListener('keydown', handleKeyEvent);
-  //     window.removeEventListener('keyup', handleKeyEvent);
-  //   };
-  // }, []); // Empty dependency array means this effect runs only once after the initial render
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setIdleFrame(prevFrame => prevFrame === 8 ? 1 : prevFrame + 1);
-    }, 100);
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    setPlayerImg(`assets/prop_ellr/directions/face_${DIRECTIONS[characterDir].name}.png`);
-    console.log(`prop ellr now facing ${DIRECTIONS[characterDir].name}`)
-  }, [characterDir])
 
   const handleBoardClick = event => {
     const boardRect = event.target.getBoundingClientRect();
@@ -85,6 +35,8 @@ function App() {
   }
 
   const move = () => {
+    if(isDisabled()) return;
+
     const {x, y} = characterLoc;
     const [potX, potY] = [x + DIRECTIONS[characterDir].xStep, y + DIRECTIONS[characterDir].yStep];
 
@@ -108,11 +60,77 @@ function App() {
     }
   }
 
-  const faceLeft = () => setCharacterDir(DIRECTIONS[characterDir].left);
+  const faceLeft = () => isDisabled() ? null : setCharacterDir(DIRECTIONS[characterDir].left);
 
-  const faceRight = () => setCharacterDir(DIRECTIONS[characterDir].right);
+  const faceRight = () => isDisabled() ? null : setCharacterDir(DIRECTIONS[characterDir].right);
 
   const isDisabled = () => characterLoc.x === null || characterLoc.y === null;
+
+  useEffect(() => {
+    // we need some key event listeners for the spacebar and arrow keys
+    const handleKeyEvent = (event) => {
+      switch (event.code) {
+        case 'Space':
+          if (event.type === 'keydown') {
+            event.preventDefault();
+            console.log('Spacebar pressed down');
+            setSpacebarButtonHover(!isDisabled() && true);
+          } else {
+            console.log('Spacebar released');
+            setSpacebarButtonHover(false);
+            move();
+          }
+          break;
+        case 'ArrowLeft':
+          if (event.type === 'keydown') {
+            event.preventDefault();
+            console.log('Left arrow pressed');
+            setLeftButtonHover(!isDisabled() && true);
+          } else {
+            console.log('Left arrow released');
+            setLeftButtonHover(false);
+            faceLeft();
+          }
+          break;
+        case 'ArrowRight':
+          if(event.type === 'keydown') {
+            event.preventDefault();
+            console.log('Right arrow pressed');
+            setRightButtonHover(!isDisabled() && true);
+          } else {
+            console.log('Right arrow released');
+            setRightButtonHover(false);
+            faceRight();
+          }
+          break;
+        default:
+          break;
+      }
+    };
+
+    // add event listener for keydown and keyup events
+    window.addEventListener('keydown', handleKeyEvent);
+    window.addEventListener('keyup', handleKeyEvent);
+
+    // remove event listener for cleanup
+    return () => {
+      window.removeEventListener('keydown', handleKeyEvent);
+      window.removeEventListener('keyup', handleKeyEvent);
+    };
+
+  }, [isDisabled, move, faceLeft, faceRight]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setIdleFrame(prevFrame => prevFrame === 8 ? 1 : prevFrame + 1);
+    }, 100);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    setPlayerImg(`assets/prop_ellr/directions/face_${DIRECTIONS[characterDir].name}.png`);
+    console.log(`prop ellr now facing ${DIRECTIONS[characterDir].name}`)
+  }, [characterDir])
 
   return (
     <div className="App">
