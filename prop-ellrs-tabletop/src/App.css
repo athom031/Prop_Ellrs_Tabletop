@@ -36,3 +36,38 @@
     display: flex;
     flex-direction: column;
 }
+
+.player-start {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+}
+
+.prop-ellr-box {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reset {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.prop-ellr-box img {
+    width: 100%;
+    height: auto;
+}
+
+.prop-ellr-box .prop-ellr-idle {
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 60%;
+    height: 60%;
+}

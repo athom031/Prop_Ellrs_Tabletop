@@ -1,13 +1,23 @@
 
 import './App.css';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {BOARD_LENGTH, DIRECTIONS, NORTH } from './constants/directions';
 
 
 function App() {
   const [characterLoc, setCharacterLoc] = useState({x: null, y: null});
   const [characterDir, setCharacterDir] = useState(DIRECTIONS[NORTH].name);
-  const [playerImg, setPlayerImg] = useState('');
+  const [playerImg, setPlayerImg] = useState('assets/prop_ellr/directions/face_north.png');
+
+  const [idle_frame, setIdleFrame] = useState(1);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setIdleFrame(prevFrame => prevFrame === 8 ? 1 : prevFrame + 1);
+    }, 100);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const move = () => {
     const {x, y} = characterLoc;
@@ -42,62 +52,75 @@ function App() {
           />
           <img
             className='player-img'
-            src='assets/prop_ellr/face_left.png'
+            src={playerImg}
             alt="Prop Ellr"
           />
         </div>
 
         <div className="player-commands">
-
-          {characterLoc.x ?? 'Not Set'}
-          <br/>
-          {characterLoc.y ?? 'Not Set'}
-          <br/>
-          {characterDir}
-
-          <br/>
-          <br/>
-
-          <button onClick={() => setCharacterLoc({x: 0, y: 0})}>
-            Start Game
-          </button>
-
-          <br/>
-
-          <button disabled={isDisabled()} onClick={() => move()}>
-            Move in Direction
-          </button>
-
-          <br/>
-
-          <button disabled={isDisabled()} onClick={() => setCharacterDir(DIRECTIONS[characterDir].left)}>
-            Face Left
-          </button>
-
-          <br/>
-
-          <button disabled={isDisabled()} onClick={() => setCharacterDir(DIRECTIONS[characterDir].right)}>
-            Face Right
-          </button>
-
-          <br/>
-
           <div className="player-start">
               <div className='prop-ellr-box'>
-
+                <img
+                  className='prop-ellr-holder'
+                  src='assets/box/box.png'
+                  alt="Box"
+                />
+                {isDisabled() && (
+                  <img
+                    className='prop-ellr-idle'
+                    src={`assets/prop_ellr/idle/idle_${idle_frame}.png`}
+                    alt="Prop Ellr Idle"
+                  />
+                )}
               </div>
               <div className='reset'>
                 <button onClick={() => window.location.reload()}>Reset</button>
               </div>
           </div>
+        </div>
 
           <div className="player-controls"></div>
 
           <div className="player-status">
 
           </div>
-        </div>
+        {/* </div> */}
+
       </div>
+        <div>
+          {characterLoc.x ?? 'Not Set'}
+            <br/>
+            {characterLoc.y ?? 'Not Set'}
+            <br/>
+            {characterDir}
+
+            <br/>
+            <br/>
+
+            <button onClick={() => setCharacterLoc({x: 0, y: 0})}>
+              Start Game
+            </button>
+
+            <br/>
+
+            <button disabled={isDisabled()} onClick={() => move()}>
+              Move in Direction
+            </button>
+
+            <br/>
+
+            <button disabled={isDisabled()} onClick={() => setCharacterDir(DIRECTIONS[characterDir].left)}>
+              Face Left
+            </button>
+
+            <br/>
+
+            <button disabled={isDisabled()} onClick={() => setCharacterDir(DIRECTIONS[characterDir].right)}>
+              Face Right
+            </button>
+
+            <br/>
+        </div>
     </div>
   );
 }
