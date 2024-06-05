@@ -1,40 +1,111 @@
-# Prop Ellr's TableTop Journey!
-
-## React Fundamentals
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Test Logs
 
 
-### `npm start`
+### Test 1: Buttons / Keys Disabled Before First Place
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
+MOVE
+LEFT
+RIGHT
+REPORT
+OUTPUT: NULL (no functionality until player is placed)
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Test 2: Player is Placed facing North
 
+```
+PLACE 0, 0
+REPORT
+OUTPUT: 0, 0, NORTH
+```
 
-### `npm run build`
+### TEST 3: Player cant move off north border
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+PLACE 0, 4
+MOVE
+REPORT
+OUTPUT: 0, 4, NORTH
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### TEST 4: Player cant move off east border
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+PLACE 4, 4
+RIGHT
+MOVE
+REPORT
+OUTPUT: 4, 4, EAST
+```
 
-## Design
+### TEST 5: Player cant move off south border
 
-![Design](https://github.com/athom031/Prop_Ellrs_Tabletop/blob/main/Design.png)
+```
+PLACE 0,0
+RIGHT
+RIGHT
+MOVE
+REPORT
+OUTPUT: 0, 0, SOUTH
+```
 
+### TEST 6: Player cant move off west border
 
-## Asset References
+```
+PLACE 0, 2
+LEFT
+MOVE
+REPORT
+OUTPUT: 0, 2, WEST
+```
 
-I haven't worked with many sprites before so had to pull some from online.
+### TEST 7: Player can complete circle by turning left 4 times
 
-Giving credit for images used in project:
+```
+PLACE 0, 0
+REPORT
+OUTPUT: 0, 0, NORTH
+LEFT
+LEFT
+LEFT
+LEFT
+REPORT
+OUTPUT: 0, 0, NORTH
+```
 
-- Prop Ellr comes from an enemy in a Spongebob Gameboy game, sprite sheet can be found [here](https://www.spriters-resource.com/game_boy_advance/spongebobsquarepantsbattleforbikinibottom/sheet/84906/)
-- Thought it would be "cute" for Prop Ellr to have some kind of box while not on table so that image came from Vecteezy and can be found [here](https://www.vecteezy.com/vector-art/3916593-collection-of-flat-vector-illustrations-of-cardboard-boxes-in-cartoon-style-perfect-for-illustrations-of-shipping-services-cargo-and-gift-boxes)
-- From the design, I wanted to have some buttons. Luckily I was able to find some that fit my needs all from the same stylesheet which can be found [here](https://prinbles.itch.io/robin)
+### TEST 8: Player can complete circle by turning right 4 times
+
+```
+PLACE 0, 0
+REPORT
+OUTPUT: 0, 0, NORTH
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+REPORT
+OUTPUT: 0, 0, NORTH
+```
+
+### TEST 9: Trying to place player in same location doesn't overwrite direction
+
+```
+PLACE 0, 0
+REPORT
+OUTPUT: 0, 0, NORTH
+RIGHT
+PLACE 0, 0
+REPORT
+OUTPUT: 0, 0, EAST
+```
+
+### TEST 10: Can place elsewhere on board after initial place
+
+```
+PLACE 0, 0
+REPORT
+OUTPUT: 0, 0, NORTH
+PLACE 4, 4
+REPORT
+OUTPUT: 4, 4, NORTH
+```

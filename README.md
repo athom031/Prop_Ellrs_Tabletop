@@ -38,3 +38,11 @@ Giving credit for images used in project:
 - Prop Ellr comes from an enemy in a Spongebob Gameboy game, sprite sheet can be found [here](https://www.spriters-resource.com/game_boy_advance/spongebobsquarepantsbattleforbikinibottom/sheet/84906/)
 - Thought it would be "cute" for Prop Ellr to have some kind of box while not on table so that image came from Vecteezy and can be found [here](https://www.vecteezy.com/vector-art/3916593-collection-of-flat-vector-illustrations-of-cardboard-boxes-in-cartoon-style-perfect-for-illustrations-of-shipping-services-cargo-and-gift-boxes)
 - From the design, I wanted to have some buttons. Luckily I was able to find some that fit my needs all from the same stylesheet which can be found [here](https://prinbles.itch.io/robin)
+
+## Testing
+
+Test Logs can be found in [TEST.MD](https://github.com/athom031/Prop_Ellrs_Tabletop/blob/main/TEST.md)
+
+## Deployment
+
+Web App is Deployd on [Netlify](https://prop-ellrs-tabletop.netlify.app/)
