@@ -17,42 +17,52 @@ function App() {
     const intervalId = setInterval(() => {
       setIdleFrame(prevFrame => prevFrame === 8 ? 1 : prevFrame + 1);
     }, 100);
-
     return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
     setPlayerImg(`assets/prop_ellr/directions/face_${DIRECTIONS[characterDir].name}.png`);
+    console.log(`prop ellr now facing ${DIRECTIONS[characterDir].name}`)
   }, [characterDir])
 
   const handleBoardClick = event => {
     const boardRect = event.target.getBoundingClientRect();
     const x = Math.floor((event.clientX - boardRect.left) / (boardRect.width / 5));
     const y = Math.floor((event.clientY - boardRect.top) / (boardRect.height / 5));
-
     // ASSUMPTION
     // PLACE command has robot facing north
     // UNLESS location is same as previous location
     if(x === characterLoc.x && y === characterLoc.y) {
       // do nothing
+      console.log('do nothing because same location');
     } else {
       setCharacterLoc({x, y});
       setCharacterDir(DIRECTIONS[NORTH].name);
+      console.log(`prop ellr placed at ${x},${y} (relative to grid)`);
     }
   }
 
   const move = () => {
     const {x, y} = characterLoc;
-    console.log(x, y);
-    console.log(DIRECTIONS[characterDir].xStep, DIRECTIONS[characterDir].yStep);
     const [potX, potY] = [x + DIRECTIONS[characterDir].xStep, y + DIRECTIONS[characterDir].yStep];
 
     if(potX < 0 || potX >= BOARD_LENGTH || potY < 0 || potY >= BOARD_LENGTH) {
-      // do nothing because taking this step would go out of bounds
-      // maybe show a highlighted red or something like that
-      // to show that this is not a valid move
+      // show error for attempting to move off table
+      console.log('invalid move');
+      let error_frame = 1;
+      const showErrorFrame = () => {
+        if (error_frame <= 7) {
+          setPlayerImg(`assets/prop_ellr/error/error_${error_frame}.png`);
+          error_frame++;
+          setTimeout(showErrorFrame, 1000 / 7);
+        } else {
+          setPlayerImg(`assets/prop_ellr/directions/face_${characterDir}.png`);
+        }
+      };
+      showErrorFrame();
     } else {
       setCharacterLoc({x: potX, y: potY});
+      console.log(`prop ellr moved to ${potX},${potY} (relative to grid)`);
     }
   }
 
@@ -79,6 +89,7 @@ function App() {
               left: `${(characterLoc.x) * 18.5}%`,
               top: `${(characterLoc.y) * 20}%`,
             }}
+            // not sure why 18.5 for the width -> hacked number
             alt="Player"
           />)}
         </div>

@@ -11,7 +11,7 @@ export const BOARD_LENGTH = 5;
 export const DIRECTIONS = {
     'North': {
       xStep: 0,
-      yStep: 1,
+      yStep: -1,
       name: NORTH,
       right: EAST,
       left: WEST
@@ -25,7 +25,7 @@ export const DIRECTIONS = {
     },
     'South': {
       xStep: 0,
-      yStep: -1,
+      yStep: 1,
       name: SOUTH,
       right: WEST,
       left: EAST
