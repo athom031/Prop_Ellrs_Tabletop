@@ -14,7 +14,9 @@ body {
 
 .app-title {
     text-align: center;
-    font-size: 1em;
+    font-size: 3em;
+    padding-top: 1em;
+    padding-bottom: 0px;
 }
 
 .app-content {
@@ -51,10 +53,14 @@ body {
     width: 40vw;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
+    height: 100%;
+    padding: 20px;
 }
 
-/* IDLE LOC & RESTART BUTTON  */
+/* PLAYER START */
+
 .player-start {
     display: flex;
     flex-direction: row;
@@ -91,24 +97,30 @@ body {
     align-items: center;
 }
 
-
-.player-controls {
-    display: flex;
-    flex-direction: row;
+.restart-button {
+    padding-top: 10%;
 }
 
+/* PLAYER STATUS  */
+
+.player-status {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
 
 .chat-container {
     position: relative;
-    width: 300px; /* Fixed width */
-    height: 200px; /* Fixed height */
-    overflow: hidden; /* Ensures no overflow of text outside the container */
+    width: 75%;
+    height: auto;
+    overflow: hidden;
 }
 
 .chat-container img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures the image covers the container without distortion */
+    object-fit: contain;
 }
 
 .overlay-text {
@@ -117,17 +129,22 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px; /* Adjust font size as needed */
+    font-size: 1.25em;
     text-align: center;
-    padding: 10px; /* Padding to ensure text does not touch the edges */
-    background-color: rgba(0, 0, 0, 0.5); /* Optional: Adds a semi-transparent overlay */
+    padding: 10px;
 }
 
 
+.player-controls {
+    display: flex;
+    flex-direction: row;
+}
+
+
+/* REUSABLE BUTTON  */
 .reusable-button {
     display: flex;
     flex-direction: column;
@@ -148,8 +165,4 @@ body {
 .reusable-button h2 {
     margin: 10px 0 0 0;
     text-align: center;
-}
-
-.restart-button {
-    padding-top: 10%;
 }
