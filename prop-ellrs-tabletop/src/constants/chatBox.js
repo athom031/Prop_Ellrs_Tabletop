@@ -18,9 +18,6 @@ export const StartingText = 'Click to place Prop Ellr'
 export const ErrorText = 'Ouch! That\'s a Invalid Move'
 
 const translateCoord = ({x, y}) => {
-    const tempX = x;
-    const tempY = y;
-
     // 0 1 2 3 4 x
     // 1
     // 2
@@ -28,8 +25,7 @@ const translateCoord = ({x, y}) => {
     // 4
     // y
 
-    x = tempX;
-    y = (BOARD_LENGTH - 1) - tempY;
+    y = (BOARD_LENGTH - 1) - y;
 
     return {x, y}
 }
