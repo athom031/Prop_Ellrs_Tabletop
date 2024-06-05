@@ -7,7 +7,7 @@ import {BOARD_LENGTH, DIRECTIONS, NORTH } from './constants/directions';
 function App() {
   const [characterLoc, setCharacterLoc] = useState({x: null, y: null});
   const [characterDir, setCharacterDir] = useState(DIRECTIONS[NORTH].name);
-  const [playerImg, setPlayerImg] = useState('assets/prop_ellr/directions/face_north.png');
+  const [playerImg, setPlayerImg] = useState(`assets/prop_ellr/directions/face_${NORTH}.png`);
 
   const [idle_frame, setIdleFrame] = useState(1);
 
@@ -20,6 +20,26 @@ function App() {
 
     return () => clearInterval(intervalId);
   }, []);
+
+  useEffect(() => {
+    setPlayerImg(`assets/prop_ellr/directions/face_${DIRECTIONS[characterDir].name}.png`);
+  }, [characterDir])
+
+  const handleBoardClick = event => {
+    const boardRect = event.target.getBoundingClientRect();
+    const x = Math.floor((event.clientX - boardRect.left) / (boardRect.width / 5));
+    const y = Math.floor((event.clientY - boardRect.top) / (boardRect.height / 5));
+
+    // ASSUMPTION
+    // PLACE command has robot facing north
+    // UNLESS location is same as previous location
+    if(x === characterLoc.x && y === characterLoc.y) {
+      // do nothing
+    } else {
+      setCharacterLoc({x, y});
+      setCharacterDir(DIRECTIONS[NORTH].name);
+    }
+  }
 
   const move = () => {
     const {x, y} = characterLoc;
@@ -49,14 +69,18 @@ function App() {
           <img
             className='board-img'
             src='assets/board/board.png'
-            onClick={(event) => console.log(event)}
+            onClick={handleBoardClick}
             alt="Board"
           />
-          {/* <img
+          {!isDisabled() && (<img
             className='player-img'
             src={playerImg}
-            alt="Prop Ellr"
-          /> */}
+            style={{
+              left: `${(characterLoc.x) * 18.5}%`,
+              top: `${(characterLoc.y) * 20}%`,
+            }}
+            alt="Player"
+          />)}
         </div>
 
         <div className="player-commands">

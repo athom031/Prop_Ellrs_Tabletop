@@ -23,12 +23,19 @@
 .board {
     width: 45vw;
     padding-right: 5vw;
+    position: relative;
 }
 
 .board .board-img {
     width: 100%;
     height: auto;
     display: block;
+}
+
+.player-img {
+    position: absolute;
+    width: 15%;
+    height: auto;
 }
 
 .player-commands {
