@@ -50,11 +50,11 @@ function App() {
             onClick={(event) => console.log(event)}
             alt="Board"
           />
-          <img
+          {/* <img
             className='player-img'
             src={playerImg}
             alt="Prop Ellr"
-          />
+          /> */}
         </div>
 
         <div className="player-commands">
