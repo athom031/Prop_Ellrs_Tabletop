@@ -1,6 +1,6 @@
 
 import './App.css';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import {BOARD_LENGTH, DIRECTIONS, NORTH } from './constants/directions';
 import { ChatBox, StartingText, ErrorText, PlaceText, ReportText } from './constants/chatBox';
 import ReusableButton from './constants/reusableButton';
@@ -36,7 +36,9 @@ function App() {
 
   const report = () => setChatBoxText(ReportText(characterLoc));
 
-  const move = () => {
+  const isDisabled = useCallback(() => characterLoc.x === null || characterLoc.y === null, [characterLoc]);
+
+  const move = useCallback(() => {
     if(isDisabled()) return;
 
     const {x, y} = characterLoc;
@@ -62,13 +64,12 @@ function App() {
     } else {
       setCharacterLoc({x: potX, y: potY});
     }
-  }
+  }, [characterLoc, characterDir, isDisabled]);
 
-  const faceLeft = () => isDisabled() ? null : setCharacterDir(DIRECTIONS[characterDir].left);
+  const faceLeft = useCallback(() => isDisabled() ? null : setCharacterDir(DIRECTIONS[characterDir].left), [characterDir, isDisabled]);
 
-  const faceRight = () => isDisabled() ? null : setCharacterDir(DIRECTIONS[characterDir].right);
+  const faceRight = useCallback(() => isDisabled() ? null : setCharacterDir(DIRECTIONS[characterDir].right), [characterDir, isDisabled]);
 
-  const isDisabled = () => characterLoc.x === null || characterLoc.y === null;
 
   useEffect(() => {
     // we need some key event listeners for the spacebar and arrow keys
