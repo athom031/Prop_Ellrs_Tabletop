@@ -14,6 +14,7 @@ body {
 
 .app-title {
     text-align: center;
+    font-size: 1em;
 }
 
 .app-content {
@@ -25,7 +26,7 @@ body {
     flex-grow: 1;
 }
 
-
+/* 5x5 BOARD */
 .board {
     width: 45vw;
     padding-right: 5vw;
@@ -44,29 +45,27 @@ body {
     height: auto;
 }
 
+/* PLAYER COMMANDS  */
+
 .player-commands {
     width: 40vw;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
+/* IDLE LOC & RESTART BUTTON  */
 .player-start {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 90%;
     align-items: center;
+    justify-content: space-between;
 }
 
 .prop-ellr-box {
     flex: 1;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.restart {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -84,6 +83,14 @@ body {
     width: 60%;
     height: 60%;
 }
+
+.prop-ellr-box, .restart-button {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .player-controls {
     display: flex;

@@ -3,6 +3,7 @@ import './App.css';
 import {useState, useEffect} from 'react';
 import {BOARD_LENGTH, DIRECTIONS, NORTH } from './constants/directions';
 import { ChatBox } from './constants/chatBox';
+import ReusableButton from './constants/reusableButton';
 
 function App() {
   const [characterLoc, setCharacterLoc] = useState({x: null, y: null});
@@ -179,18 +180,14 @@ function App() {
                 )}
               </div>
               <div className='restart-button'>
-                <div className='reusable-button'
-                  onMouseEnter={() => setRestartButtonHover(true)}
-                  onMouseLeave={() => setRestartButtonHover(false)}
+                <ReusableButton
+                  hover={restartButtonHover}
+                  disabled={isDisabled()}
                   onClick={() => window.location.reload()}
-                >
-                  <img
-                    className='button-img'
-                    src={`assets/buttons/restart/restart${restartButtonHover ? '-hover' : ''}.png`}
-                    alt='Restart Button'
-                  />
-                  <h2>Restart</h2>
-                </div>
+                  imgPrefix='assets/buttons/restart/restart'
+                  altText='Restart Button'
+                  label='Restart'
+                />
               </div>
           </div>
 
@@ -198,70 +195,50 @@ function App() {
           <div className="player-status">
             <ChatBox text={chatBoxText}/>
             <div className='report-button'>
-              <div className='reusable-button'
-                  onMouseEnter={() => setReportButtonHover(!isDisabled() && true)}
-                  onMouseLeave={() => setReportButtonHover(false)}
-                  disabled={isDisabled()}
-                  onClick={() => report()}
-              >
-                <img
-                  className='button-img'
-                  src={`assets/buttons/report/report${reportButtonHover ? '-hover' : ''}.png`}
-                  alt='Spacebar Button'
-                />
-                <h2>Report Status</h2>
-              </div>
+              <ReusableButton
+                hover={reportButtonHover}
+                disabled={isDisabled()}
+                onClick={() => report()}
+                imgPrefix='assets/buttons/report/report'
+                altText='Report Button'
+                label='Report'
+              />
             </div>
           </div>
 
           {/* third row of commands: player controls (space, left, right) */}
           <div className="player-controls">
             <div className='spacebar-button'>
-              <div className='reusable-button'
-                  onMouseEnter={() => setSpacebarButtonHover(!isDisabled() && true)}
-                  onMouseLeave={() => setSpacebarButtonHover(false)}
-                  disabled={isDisabled()}
-                  onClick={() => move()}
-              >
-                  <img
-                    className='button-img'
-                    src={`assets/buttons/spacebar/spacebar${spacebarButtonHover ? '-hover' : ''}.png`}
-                    alt='Spacebar Button'
-                  />
-                  <h2>Move Prop Ellr (Spacebar)</h2>
-              </div>
+              <ReusableButton
+                hover={spacebarButtonHover}
+                disabled={isDisabled()}
+                onClick={() => move()}
+                imgPrefix='assets/buttons/spacebar/spacebar'
+                altText='Spacebar Button'
+                label='Move'
+              />
             </div>
 
             <div className='left-button'>
-              <div className='reusable-button'
-                  onMouseEnter={() => setLeftButtonHover(!isDisabled() && true)}
-                  onMouseLeave={() => setLeftButtonHover(false)}
-                  disabled={isDisabled()}
-                  onClick={() => faceLeft()}
-              >
-                  <img
-                    className='button-img'
-                    src={`assets/buttons/arrow-left/arrow-left${leftButtonHover ? '-hover' : ''}.png`}
-                    alt='Left Arrow Button'
-                  />
-                  <h2>Face Left ({'<-'} Key)</h2>
-              </div>
+              <ReusableButton
+                hover={leftButtonHover}
+                disabled={isDisabled()}
+                onClick={() => faceLeft()}
+                imgPrefix='assets/buttons/arrow-left/arrow-left'
+                altText='Left Arrow Button'
+                label='Left'
+              />
           </div>
 
           <div className='right-button'>
-              <div className='reusable-button'
-                  onMouseEnter={() => setRightButtonHover(!isDisabled() && true)}
-                  onMouseLeave={() => setRightButtonHover(false)}
-                  disabled={isDisabled()}
-                  onClick={() => faceRight()}
-              >
-                  <img
-                    className='button-img'
-                    src={`assets/buttons/arrow-right/arrow-right${rightButtonHover ? '-hover' : ''}.png`}
-                    alt='Right Arrow Button'
-                  />
-                  <h2>Face Right ({'->'} Key)</h2>
-              </div>
+            <ReusableButton
+              hover={rightButtonHover}
+              disabled={isDisabled()}
+              onClick={() => faceRight()}
+              imgPrefix='assets/buttons/arrow-right/arrow-right'
+              altText='Right Arrow Button'
+              label='Right'
+            />
           </div>
 
         </div>
