@@ -64,11 +64,11 @@ function App() {
     } else {
       setCharacterLoc({x: potX, y: potY});
     }
-  }, [characterLoc, characterDir, isDisabled]);
+  }, [characterLoc, characterDir, chatBoxText]);
 
-  const faceLeft = useCallback(() => isDisabled() ? null : setCharacterDir(DIRECTIONS[characterDir].left), [characterDir, isDisabled]);
+  const faceLeft = useCallback(() => isDisabled() ? null : setCharacterDir(DIRECTIONS[characterDir].left), [characterDir]);
 
-  const faceRight = useCallback(() => isDisabled() ? null : setCharacterDir(DIRECTIONS[characterDir].right), [characterDir, isDisabled]);
+  const faceRight = useCallback(() => isDisabled() ? null : setCharacterDir(DIRECTIONS[characterDir].right), [characterDir]);
 
 
   useEffect(() => {
