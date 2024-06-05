@@ -11,6 +11,8 @@ function App() {
 
   const [idle_frame, setIdleFrame] = useState(1);
 
+  const [restartButtonHover, setRestartButtonHover] = useState(false);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setIdleFrame(prevFrame => prevFrame === 8 ? 1 : prevFrame + 1);
@@ -73,8 +75,19 @@ function App() {
                   />
                 )}
               </div>
-              <div className='reset'>
-                <button onClick={() => window.location.reload()}>Reset</button>
+              <div className='restart-button'>
+                <div className='reusable-button'
+                  onMouseEnter={() => setRestartButtonHover(true)}
+                  onMouseLeave={() => setRestartButtonHover(false)}
+                  onClick={() => window.location.reload()}
+                >
+                  <img
+                    className='button-img'
+                    src={`assets/buttons/restart/restart${restartButtonHover ? '-hover' : ''}.png`}
+                    alt='Restart Button'
+                  />
+                  <h2>Restart</h2>
+                </div>
               </div>
           </div>
         </div>

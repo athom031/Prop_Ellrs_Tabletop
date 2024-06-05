@@ -52,7 +52,7 @@
     align-items: center;
 }
 
-.reset {
+.restart {
     flex: 1;
     display: flex;
     justify-content: center;
