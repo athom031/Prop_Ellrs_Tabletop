@@ -35,7 +35,7 @@ export const PlaceText = ({x, y}) => {
     return `Placed at (${translated.x}, ${translated.y})`
 }
 
-export const ReportText = ({x,y}) => {
+export const ReportText = ({x,y}, characterDir) => {
     const translated = translateCoord({x, y});
-    return `Report: Last Seen at (${translated.x}, ${translated.y})`;
+    return `Report: Last Seen at (${translated.x}, ${translated.y}), facing ${characterDir}`;
 }

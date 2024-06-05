@@ -34,7 +34,7 @@ function App() {
     }
   }
 
-  const report = () => setChatBoxText(ReportText(characterLoc));
+  const report = () => setChatBoxText(ReportText(characterLoc, characterDir));
 
   const isDisabled = useCallback(() => characterLoc.x === null || characterLoc.y === null, [characterLoc]);
 
@@ -64,11 +64,11 @@ function App() {
     } else {
       setCharacterLoc({x: potX, y: potY});
     }
-  }, [characterLoc, characterDir, chatBoxText]);
+  }, [characterLoc, characterDir, chatBoxText, isDisabled]);
 
-  const faceLeft = useCallback(() => isDisabled() ? null : setCharacterDir(DIRECTIONS[characterDir].left), [characterDir]);
+  const faceLeft = useCallback(() => isDisabled() ? null : setCharacterDir(DIRECTIONS[characterDir].left), [characterDir, isDisabled]);
 
-  const faceRight = useCallback(() => isDisabled() ? null : setCharacterDir(DIRECTIONS[characterDir].right), [characterDir]);
+  const faceRight = useCallback(() => isDisabled() ? null : setCharacterDir(DIRECTIONS[characterDir].right), [characterDir, isDisabled]);
 
 
   useEffect(() => {
