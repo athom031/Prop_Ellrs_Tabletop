@@ -12,6 +12,48 @@ function App() {
   const [idle_frame, setIdleFrame] = useState(1);
 
   const [restartButtonHover, setRestartButtonHover] = useState(false);
+  const [spacebarButtonHover, setSpacebarButtonHover] = useState(false);
+  const [leftButtonHover, setLeftButtonHover] = useState(false);
+  const [rightButtonHover, setRightButtonHover] = useState(false);
+
+  // useEffect(() => {
+  //   // Function to handle key events
+  //   const handleKeyEvent = (event) => {
+  //     switch (event.code) {
+  //       case 'Space':
+  //         if (event.type === 'keydown') {
+  //           console.log('Spacebar pressed down');
+  //           // Logic for spacebar keydown
+  //         } else {
+  //           console.log('Spacebar released');
+  //           // Logic for spacebar keyup
+  //         }
+  //         break;
+  //       case 'ArrowLeft':
+  //         if (event.type === 'keydown') {
+  //           console.log('Left arrow pressed');
+  //           // Logic for left arrow keydown
+  //         }
+  //         break;
+  //       case 'ArrowRight':
+  //         if (event.type === 'keydown') {
+  //           console.log('Right arrow pressed');
+  //           // Logic for right arrow keydown
+  //         }
+  //         break;
+  //       default:
+  //         break;
+  //     }
+  //   };
+  //   // Add event listeners for both keydown and keyup events
+  //   window.addEventListener('keydown', handleKeyEvent);
+  //   window.addEventListener('keyup', handleKeyEvent);
+  //   // Cleanup function to remove the event listeners
+  //   return () => {
+  //     window.removeEventListener('keydown', handleKeyEvent);
+  //     window.removeEventListener('keyup', handleKeyEvent);
+  //   };
+  // }, []); // Empty dependency array means this effect runs only once after the initial render
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -66,6 +108,10 @@ function App() {
     }
   }
 
+  const faceLeft = () => setCharacterDir(DIRECTIONS[characterDir].left);
+
+  const faceRight = () => setCharacterDir(DIRECTIONS[characterDir].right);
+
   const isDisabled = () => characterLoc.x === null || characterLoc.y === null;
 
   return (
@@ -95,6 +141,7 @@ function App() {
         </div>
 
         <div className="player-commands">
+          {/* first row of commands: prop ellrs idle location and restart button */}
           <div className="player-start">
               <div className='prop-ellr-box'>
                 <img
@@ -125,50 +172,66 @@ function App() {
                 </div>
               </div>
           </div>
-        </div>
 
-          <div className="player-controls"></div>
-
+          {/* second row of commands: chat box showing status and report button */}
           <div className="player-status">
 
           </div>
-        {/* </div> */}
 
-      </div>
-        <div>
-          {characterLoc.x ?? 'Not Set'}
-            <br/>
-            {characterLoc.y ?? 'Not Set'}
-            <br/>
-            {characterDir}
+          {/* third row of commands: player controls (space, left, right) */}
+          <div className="player-controls">
+            <div className='spacebar-button'>
+              <div className='reusable-button'
+                  onMouseEnter={() => setSpacebarButtonHover(!isDisabled() && true)}
+                  onMouseLeave={() => setSpacebarButtonHover(false)}
+                  disabled={isDisabled()}
+                  onClick={() => move()}
+              >
+                  <img
+                    className='button-img'
+                    src={`assets/buttons/spacebar/spacebar${spacebarButtonHover ? '-hover' : ''}.png`}
+                    alt='Spacebar Button'
+                  />
+                  <h2>Move Prop Ellr (Spacebar)</h2>
+              </div>
+            </div>
 
-            <br/>
-            <br/>
+            <div className='left-button'>
+              <div className='reusable-button'
+                  onMouseEnter={() => setLeftButtonHover(!isDisabled() && true)}
+                  onMouseLeave={() => setLeftButtonHover(false)}
+                  disabled={isDisabled()}
+                  onClick={() => faceLeft()}
+              >
+                  <img
+                    className='button-img'
+                    src={`assets/buttons/arrow-left/arrow-left${leftButtonHover ? '-hover' : ''}.png`}
+                    alt='Left Arrow Button'
+                  />
+                  <h2>Face Left ({'<-'} Key)</h2>
+              </div>
+          </div>
 
-            <button onClick={() => setCharacterLoc({x: 0, y: 0})}>
-              Start Game
-            </button>
+          <div className='right-button'>
+              <div className='reusable-button'
+                  onMouseEnter={() => setRightButtonHover(!isDisabled() && true)}
+                  onMouseLeave={() => setRightButtonHover(false)}
+                  disabled={isDisabled()}
+                  onClick={() => faceRight()}
+              >
+                  <img
+                    className='button-img'
+                    src={`assets/buttons/arrow-right/arrow-right${rightButtonHover ? '-hover' : ''}.png`}
+                    alt='Right Arrow Button'
+                  />
+                  <h2>Face Right ({'->'} Key)</h2>
+              </div>
+          </div>
 
-            <br/>
-
-            <button disabled={isDisabled()} onClick={() => move()}>
-              Move in Direction
-            </button>
-
-            <br/>
-
-            <button disabled={isDisabled()} onClick={() => setCharacterDir(DIRECTIONS[characterDir].left)}>
-              Face Left
-            </button>
-
-            <br/>
-
-            <button disabled={isDisabled()} onClick={() => setCharacterDir(DIRECTIONS[characterDir].right)}>
-              Face Right
-            </button>
-
-            <br/>
         </div>
+      </div>
+    </div>
+
     </div>
   );
 }
