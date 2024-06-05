@@ -182,6 +182,7 @@ function App() {
               <div className='restart-button'>
                 <ReusableButton
                   hover={restartButtonHover}
+                  setHover={setRestartButtonHover}
                   disabled={isDisabled()}
                   onClick={() => window.location.reload()}
                   imgPrefix='assets/buttons/restart/restart'
@@ -197,6 +198,7 @@ function App() {
             <div className='report-button'>
               <ReusableButton
                 hover={reportButtonHover}
+                setHover={setReportButtonHover}
                 disabled={isDisabled()}
                 onClick={() => report()}
                 imgPrefix='assets/buttons/report/report'
@@ -211,6 +213,7 @@ function App() {
             <div className='spacebar-button'>
               <ReusableButton
                 hover={spacebarButtonHover}
+                setHover={setSpacebarButtonHover}
                 disabled={isDisabled()}
                 onClick={() => move()}
                 imgPrefix='assets/buttons/spacebar/spacebar'
@@ -222,6 +225,7 @@ function App() {
             <div className='left-button'>
               <ReusableButton
                 hover={leftButtonHover}
+                setHover={setLeftButtonHover}
                 disabled={isDisabled()}
                 onClick={() => faceLeft()}
                 imgPrefix='assets/buttons/arrow-left/arrow-left'
@@ -233,6 +237,7 @@ function App() {
           <div className='right-button'>
             <ReusableButton
               hover={rightButtonHover}
+              setHover={setRightButtonHover}
               disabled={isDisabled()}
               onClick={() => faceRight()}
               imgPrefix='assets/buttons/arrow-right/arrow-right'
